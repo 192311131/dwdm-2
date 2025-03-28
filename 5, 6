@@ -1,0 +1,91 @@
+5. Implement using R language in which age group of people are affected byblood pressure based on the diabetes dataset show it using scatterplot and bar chart (that is BloodPressure vs Age using dataset “diabetes.csv”)
+
+# Load necessary libraries
+library(ggplot2)
+
+# Load the dataset
+diabetes_data <- read.csv("C:/Users/bored/OneDrive/diabetes_dataset.csv")
+
+# View the first few rows of the dataset
+head(diabetes_data)
+
+# Check for missing values
+sum(is.na(diabetes_data))
+
+# Define age groups
+bins <- c(20, 30, 40, 50, 60, 70, 80)
+labels <- c("20-30", "30-40", "40-50", "50-60", "60-70", "70-80")
+diabetes_data$AgeGroup <- cut(diabetes_data$Age, breaks = bins, labels = labels, include.lowest = TRUE)
+
+# Scatter plot: Blood Pressure vs. Age
+ggplot(diabetes_data, aes(x = Age, y = BloodPressure)) +
+  geom_point(color = "blue", alpha = 0.6) +
+  labs(title = "Scatter Plot of Blood Pressure vs. Age",
+       x = "Age",
+       y = "Blood Pressure") +
+  theme_minimal()
+
+# Bar chart: Average Blood Pressure by Age Group
+bp_by_age_group <- aggregate(BloodPressure ~ AgeGroup, data = diabetes_data, FUN = mean)
+
+ggplot(bp_by_age_group, aes(x = AgeGroup, y = BloodPressure, fill = AgeGroup)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average Blood Pressure by Age Group",
+       x = "Age Group",
+       y = "Average Blood Pressure") +
+  theme_minimal()
+
+
+
+6. Analysis the dataset “diabetes. csv” how the diabetes trend is for different age people, using linear regression and multiple regression.
+
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Load the dataset
+diabetes_data <- read.csv("C:/Users/prava/R dwdm/diabetes_dataset.csv.csv")
+
+# Check the structure of the dataset
+str(diabetes_data)
+summary(diabetes_data)
+
+# Rename columns if needed for better understanding
+colnames(diabetes_data) <- c("Pregnancies", "Glucose", "BloodPressure", "SkinThickness", "Insulin",
+                             "BMI", "DiabetesPedigreeFunction", "Age", "Outcome")
+
+# Convert Outcome to a factor (0 = No Diabetes, 1 = Diabetes)
+diabetes_data$Outcome <- as.factor(diabetes_data$Outcome)
+
+# --- LINEAR REGRESSION: Age vs Diabetes Outcome ---
+linear_model <- lm(as.numeric(Outcome) ~ Age, data = diabetes_data)
+summary(linear_model)  # Display regression results
+
+# Plot: Age vs Diabetes Outcome with Regression Line
+ggplot(diabetes_data, aes(x = Age, y = as.numeric(Outcome))) +
+  geom_point(color = "blue", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "red") +
+  labs(title = "Linear Regression: Diabetes Outcome vs Age",
+       x = "Age",
+       y = "Diabetes Outcome (0: No, 1: Yes)") +
+  theme_minimal()
+
+# --- MULTIPLE REGRESSION: Predicting Diabetes Outcome using Multiple Variables ---
+multi_model <- lm(as.numeric(Outcome) ~ Age + Glucose + BloodPressure + BMI, data = diabetes_data)
+summary(multi_model)  # Display regression results
+
+# Check correlation matrix for feature selection
+cor(diabetes_data[, c("Age", "Glucose", "BloodPressure", "BMI", "Outcome")])
+
+# --- PLOT: Predicted vs Actual Outcome ---
+diabetes_data$PredictedOutcome <- predict(multi_model)
+
+ggplot(diabetes_data, aes(x = PredictedOutcome, y = as.numeric(Outcome))) +
+  geom_point(color = "green", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "red") +
+  labs(title = "Multiple Regression: Predicted vs Actual Diabetes Outcome",
+       x = "Predicted Outcome",
+       y = "Actual Outcome") +
+  theme_minimal()
+
+
