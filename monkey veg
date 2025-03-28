@@ -1,0 +1,42 @@
+@relation transactions
+
+@attribute M {true, false}
+@attribute O {true, false}
+@attribute N {true, false}
+@attribute K {true, false}
+@attribute E {true, false}
+@attribute Y {true, false}
+@attribute D {true, false}
+@attribute A {true, false}
+@attribute U {true, false}
+@attribute C {true, false}
+@attribute I {true, false}
+
+@data
+true, true, true, true, true, true, false, false, false, false, false
+false, true, true, true, true, true, true, false, false, false, false
+true, false, false, true, true, false, false, true, false, false, false
+true, false, false, true, false, true, false, false, true, true, false
+false, true, false, true, true, false, false, false, false, true, true
+
+
+
+@relation food_habits
+
+@attribute Age numeric
+@attribute Gender {Male, Female}
+@attribute Likes_Spicy {yes, no}
+@attribute Prefers_Vegetables {yes, no}
+@attribute Vegetarian {yes, no}
+
+@data
+25,Male,no,yes,yes
+30,Male,yes,no,no
+28,Female,no,yes,yes
+35,Male,yes,no,no
+22,Male,no,yes,yes
+40,Male,yes,no,no
+29,Male,yes,no,no
+26,Female,no,yes,yes
+24,Female,no,yes,yes
+27,Female,yes,yes,yes
