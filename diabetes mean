@@ -1,0 +1,8 @@
+# Read dataset using correct file path
+dataset <- read.csv("C:/Users/harik/OneDrive/diabetes_age_dataset.csv")
+
+# Compute the mean of the Age column
+mean_age <- mean(dataset$Age)
+
+# Print the result
+print(mean_age)
